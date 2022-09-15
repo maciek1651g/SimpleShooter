@@ -4,6 +4,7 @@
 
 #include "Components/SkeletalMeshComponent.h"
 #include "Kismet/GameplayStatics.h"
+#include "Engine/World.h"
 #include "DrawDebugHelpers.h"
 
 // Sets default values
@@ -47,5 +48,20 @@ void AGun::PullTrigger()
 
 	OwnerController->GetPlayerViewPoint(CameraLocation, CameraRotation);
 
-	DrawDebugCamera(GetWorld(), CameraLocation, CameraRotation, 90, 2, FColor::Red, true);
+	FVector End = CameraLocation + CameraRotation.Vector() * MaxRange;
+	FHitResult HitResult;
+
+	if (GetWorld()->LineTraceSingleByChannel(HitResult, CameraLocation, End, ECollisionChannel::ECC_GameTraceChannel1))
+	{
+		FVector ShotDirection = -CameraRotation.Vector();
+		UGameplayStatics::SpawnEmitterAtLocation(GetWorld(), ImpactEffect, HitResult.Location, ShotDirection.Rotation());
+
+		AActor *HitActor = HitResult.GetActor();
+		if (HitActor)
+		{
+			// strange notation, this is the same - FPointDamageEvent DamageEvent = FPointDamageEvent(Damage, HitResult, ShotDirection, nullptr);
+			FPointDamageEvent DamageEvent(Damage, HitResult, ShotDirection, nullptr);
+			HitActor->TakeDamage(Damage, DamageEvent, OwnerController, this);
+		}
+	}
 }
