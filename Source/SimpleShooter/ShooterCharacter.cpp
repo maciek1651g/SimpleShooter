@@ -63,6 +63,11 @@ void AShooterCharacter::Shoot()
 	}
 }
 
+bool AShooterCharacter::IsDead() const
+{
+	return Health <= 0;
+}
+
 void AShooterCharacter::MoveForward(float AxisValue)
 {
 	AddMovementInput(GetActorForwardVector() * AxisValue);
