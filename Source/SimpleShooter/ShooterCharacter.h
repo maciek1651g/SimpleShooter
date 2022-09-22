@@ -33,6 +33,8 @@ public:
 	UFUNCTION(BlueprintPure)
 	bool IsDead() const;
 
+	void Shoot();
+
 private:
 	void MoveForward(float AxisValue);
 	void MoveRightLeft(float AxisValue);
@@ -40,8 +42,6 @@ private:
 	void Jump();
 	void LookUpRate(float AxisValue);
 	void LookAroundRate(float AxisValue);
-
-	void Shoot();
 
 	UPROPERTY(EditAnywhere)
 	float RotationRate = 70;
