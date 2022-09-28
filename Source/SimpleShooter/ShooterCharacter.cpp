@@ -105,7 +105,7 @@ void AShooterCharacter::LookAroundRate(float AxisValue)
 	AddControllerYawInput(AxisValue * RotationRate * GetWorld()->GetDeltaSeconds());
 }
 
-// void AShooterCharacter::LookUp(float AxisValue)
-// {
-// 	AddControllerPitchInput(AxisValue);
-// }
+float AShooterCharacter::GetHealthPercent() const
+{
+	return Health / MaxHealth;
+}

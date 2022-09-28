@@ -20,7 +20,7 @@ void UBTService_PlayerLocationIfSeem::TickNode(UBehaviorTreeComponent &OwnerComp
 
     if (PlayerPawn && EnemyController && EnemyController->LineOfSightTo(PlayerPawn))
     {
-        OwnerComp.GetBlackboardComponent()->SetValueAsVector(GetSelectedBlackboardKey(), PlayerPawn->GetActorLocation());
+        OwnerComp.GetBlackboardComponent()->SetValueAsObject(GetSelectedBlackboardKey(), PlayerPawn);
     }
     else
     {

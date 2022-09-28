@@ -4,9 +4,22 @@
 #include "TimerManager.h"
 #include "BluePrint/UserWidget.h"
 
+void AShooterPlayerController::BeginPlay()
+{
+    Super::BeginPlay();
+
+    HUD = CreateWidget(this, HUDClass);
+    if (HUD)
+    {
+        HUD->AddToViewport();
+    }
+}
+
 void AShooterPlayerController::GameHasEnded(AActor *EndGameFocus, bool bIsWinner)
 {
     Super::GameHasEnded(EndGameFocus, bIsWinner);
+
+    HUD->RemoveFromViewport();
 
     if (bIsWinner)
     {
